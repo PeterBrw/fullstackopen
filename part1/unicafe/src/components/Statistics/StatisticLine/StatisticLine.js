@@ -1,7 +1,11 @@
 import React from 'react'
 
-const StatisticLine = ({ text, numberOfClicks }) => {
-	return <p>{text} {numberOfClicks}</p>
+const StatisticLine = ({ text, value }) => {
+	return (
+		<p>
+			{text} {value}
+		</p>
+	)
 }
 
 export default StatisticLine
