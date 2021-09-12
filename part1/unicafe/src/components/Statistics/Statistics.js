@@ -8,12 +8,19 @@ const Statistics = ({ clicks }) => {
 
 	return (
 		<>
-			<StatisticLine text={'good'} value={clicks.good} />
-			<StatisticLine text={'neutral'} value={clicks.neutral} />
-			<StatisticLine text={'bad'} value={clicks.bad} />
-			<StatisticLine text={'all'} value={all} />
-			<StatisticLine text={'average'} value={(clicks.good * 1 + clicks.bad * -1) / all} />
-			<StatisticLine text={'positive'} value={(clicks.good * 100) / all + ' %'} />
+			<table>
+				<tbody>
+					<StatisticLine text={'good'} value={clicks.good} />
+					<StatisticLine text={'neutral'} value={clicks.neutral} />
+					<StatisticLine text={'bad'} value={clicks.bad} />
+					<StatisticLine text={'all'} value={all} />
+					<StatisticLine
+						text={'average'}
+						value={(clicks.good * 1 + clicks.bad * -1) / all}
+					/>
+					<StatisticLine text={'positive'} value={(clicks.good * 100) / all + ' %'} />
+				</tbody>
+			</table>
 		</>
 	)
 }
