@@ -29,6 +29,7 @@ const App = () => {
 	return (
 		<div>
 			{anecdotes[selected]} <br />
+			has {points[selected]} votes .<br/>
 			<Button text={'vote'} onClick={handleVoteClick} />
 			<Button text={'next anecdote'} onClick={handleRandomClick} />
 		</div>
