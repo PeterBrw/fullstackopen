@@ -3,15 +3,13 @@ import Part from '../Part'
 import Total from '../Total'
 
 function Content({ parts }) {
-	let total = 0
-	
+	const total = parts.reduce((sum, part) => sum + part.exercises, 0)
 	return (
 		<>
-			{parts.map((part) => {
-				total += part.exercises
-				return <Part name={part.name} exercises={part.exercises} key={part.id} />
-			})}
-			<Total total={total} />
+			{parts.map((part) => (
+				<Part name={part.name} exercises={part.exercises} key={part.id} />
+			))}
+			<Total total={total}/>
 		</>
 	)
 }
