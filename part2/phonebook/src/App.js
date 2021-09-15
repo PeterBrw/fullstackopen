@@ -10,6 +10,21 @@ const App = () => {
 	const addName = (e) => {
 		e.preventDefault()
 		const newPersons = [...persons]
+
+		let exists = false
+
+		newPersons.forEach((person) => {
+			if (person.name === newName) {
+				exists = true
+			}
+		})
+
+		if (exists) {
+			alert(`${newName} is already added to phonebook`)
+			setNewName('')
+			return
+		}
+
 		newPersons.push({ name: newName })
 		setPersons(newPersons)
 		setNewName('')
@@ -20,7 +35,12 @@ const App = () => {
 	return (
 		<div>
 			<Header text={'Phonebook'} />
-			<Form addName={addName} newName={newName} handleNameChange={handleNameChange} />
+			<Form
+				addName={addName}
+				newName={newName}
+				handleNameChange={handleNameChange}
+				setNewName={setNewName}
+			/>
 			<Header text={'Numbers'} />
 			{persons.map((person, i) => (
 				<Number key={person.name} name={person.name} />
