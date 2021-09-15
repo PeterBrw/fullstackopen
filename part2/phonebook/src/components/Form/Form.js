@@ -1,6 +1,14 @@
 import React from 'react'
 
-function Form({ addName, newName, handleNameChange, setNewName }) {
+function Form({
+	addName,
+	newName,
+	handleNameChange,
+	setNewName,
+	newNumber,
+	handleNumberChange,
+	setNewNumber,
+}) {
 	return (
 		<>
 			<form onSubmit={addName}>
@@ -10,6 +18,14 @@ function Form({ addName, newName, handleNameChange, setNewName }) {
 						value={newName}
 						onChange={handleNameChange}
 						onFocus={() => setNewName('')}
+					/>
+				</div>
+				<div>
+					number:{' '}
+					<input
+						value={newNumber}
+						onChange={handleNumberChange}
+						onFocus={() => setNewNumber('')}
 					/>
 				</div>
 				<div>

@@ -1,9 +1,11 @@
 import React from 'react'
 
-function Number({ name }) {
+function Number({ name, number }) {
 	return (
 		<>
-			<p>{name}</p>
+			<p>
+				{name} {number}
+			</p>
 		</>
 	)
 }
