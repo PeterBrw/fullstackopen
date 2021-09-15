@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Form({
+function PersonForm({
 	addName,
 	newName,
 	handleNameChange,
@@ -36,4 +36,4 @@ function Form({
 	)
 }
 
-export default Form
+export default PersonForm

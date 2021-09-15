@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Number({ name, number }) {
+function Person({ name, number }) {
 	return (
 		<>
 			<p>
@@ -10,4 +10,4 @@ function Number({ name, number }) {
 	)
 }
 
-export default Number
+export default Person
