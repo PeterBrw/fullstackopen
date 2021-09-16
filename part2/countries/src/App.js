@@ -2,16 +2,28 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
 import Countries from './components/Counties'
+const api_key = process.env.REACT_APP_API_KEY
 
 const App = (props) => {
 	const [countries, setCountries] = useState([])
 	const [filter, setFilter] = useState('')
+	const [capital, setCapital] = useState('London')
+	const [weather, setWeather] = useState([])
 
 	useEffect(() => {
 		axios.get('https://restcountries.eu/rest/v2/all').then((response) => {
 			setCountries(response.data)
 		})
 	}, [])
+
+	useEffect(() => {
+		axios
+			.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${capital}`)
+			.then((response) => {
+				console.log(response)
+				setWeather(response.data)
+			})
+	}, [capital])
 
 	const handleFilterChange = (e) => setFilter(e.target.value)
 
@@ -25,6 +37,8 @@ const App = (props) => {
 		setFilter(name)
 	}
 
+	const handleCapitalChange = (capital) => setCapital(capital)
+	console.log(weather)
 	return (
 		<div>
 			filter shown with: <input value={filter || ''} onChange={handleFilterChange} />
@@ -39,6 +53,8 @@ const App = (props) => {
 					population={countriesToShow[0].population}
 					languages={countriesToShow[0].languages}
 					flag={countriesToShow[0].flag}
+					handleCapitalChange={handleCapitalChange}
+					weather={weather}
 				/>
 			) : (
 				<Countries countries={countriesToShow} handleOnClick={handleOnClick} />
