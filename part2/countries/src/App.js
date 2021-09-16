@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
+import Countries from './components/Counties'
 
 const App = (props) => {
 	const [countries, setCountries] = useState([])
@@ -8,7 +9,6 @@ const App = (props) => {
 
 	useEffect(() => {
 		axios.get('https://restcountries.eu/rest/v2/all').then((response) => {
-			console.log(response.data)
 			setCountries(response.data)
 		})
 	}, [])
@@ -21,9 +21,13 @@ const App = (props) => {
 
 	const emptyFilter = <p>Look for a country</p>
 
+	const handleOnClick = (name) => {
+		setFilter(name)
+	}
+
 	return (
 		<div>
-			filter shown with: <input onChange={handleFilterChange} />
+			filter shown with: <input value={filter || ''} onChange={handleFilterChange} />
 			{filter === '' ? (
 				emptyFilter
 			) : countriesToShow.length > 10 ? (
@@ -37,7 +41,7 @@ const App = (props) => {
 					flag={countriesToShow[0].flag}
 				/>
 			) : (
-				countriesToShow.map((item) => <p key={item.alpha3Code}>{item.name}</p>)
+				<Countries countries={countriesToShow} handleOnClick={handleOnClick} />
 			)}
 		</div>
 	)

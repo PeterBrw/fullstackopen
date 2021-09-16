@@ -1,4 +1,5 @@
 import React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 function Country({ name, capital, population, languages, flag }) {
 	return (
@@ -8,11 +9,11 @@ function Country({ name, capital, population, languages, flag }) {
 			<p>population {population}</p>
 			<h3>languages</h3>
 			<ul>
-				{languages.map((lan, i) => (
-					<li key={i}>{lan.name}</li>
+				{languages.map((lan) => (
+					<li key={uuidv4()}>{lan.name}</li>
 				))}
 			</ul>
-			<img src={flag} width={100} haight={100} />
+			<img src={flag} width={100} haight={100} alt="country flag"/>
 		</div>
 	)
 }
