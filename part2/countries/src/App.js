@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
-import Countries from './components/Counties'
+import Countries from './components/Countries'
 const api_key = process.env.REACT_APP_API_KEY
 
 const App = (props) => {
@@ -20,7 +20,6 @@ const App = (props) => {
 		axios
 			.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${capital}`)
 			.then((response) => {
-				console.log(response)
 				setWeather(response.data)
 			})
 	}, [capital])
@@ -38,7 +37,7 @@ const App = (props) => {
 	}
 
 	const handleCapitalChange = (capital) => setCapital(capital)
-	console.log(weather)
+
 	return (
 		<div>
 			filter shown with: <input value={filter || ''} onChange={handleFilterChange} />

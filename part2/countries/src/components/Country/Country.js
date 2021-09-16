@@ -2,7 +2,10 @@ import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 function Country({ name, capital, population, languages, flag, handleCapitalChange, weather }) {
-	handleCapitalChange(capital)
+
+	React.useEffect(() => {
+		handleCapitalChange(capital)
+	})
 
 	return (
 		<div>
@@ -22,7 +25,8 @@ function Country({ name, capital, population, languages, flag, handleCapitalChan
 			</p>
 			<img src={weather.current.weather_icons[0]} alt="weather icon" />
 			<p>
-				<b>wind: </b> {(weather.current.wind_speed / 1.609).toFixed(2)} mph direction {weather.current.wind_dir}
+				<b>wind: </b> {(weather.current.wind_speed / 1.609).toFixed(2)} mph direction{' '}
+				{weather.current.wind_dir}
 			</p>
 		</div>
 	)
