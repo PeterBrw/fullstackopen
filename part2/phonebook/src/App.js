@@ -42,10 +42,14 @@ const App = () => {
 			return
 		}
 
-		newPersons.push({ name: newName, number: newNumber, id: new Date() })
-		setPersons(newPersons)
-		setNewName('')
-		setNewNumber('')
+		const newPerson = { name: newName, number: newNumber }
+		axios.post('http://localhost:3001/persons', newPerson)
+			.then(response => {
+				newPersons.push(response.data)
+				setPersons(newPersons)
+				setNewName('')
+				setNewNumber('')
+			})
 	}
 
 	const handleNameChange = (e) => setNewName(e.target.value)
