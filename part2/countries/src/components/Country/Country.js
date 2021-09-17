@@ -5,7 +5,7 @@ function Country({ name, capital, population, languages, flag, handleCapitalChan
 
 	React.useEffect(() => {
 		handleCapitalChange(capital)
-	})
+	}, [capital])
 
 	return (
 		<div>
