@@ -1,11 +1,17 @@
 import React from 'react'
 import Person from '../Person'
 
-function Persons({ filteredPersons }) {
+function Persons({ filteredPersons, deletePerson }) {
 	return (
 		<>
-			{filteredPersons.map((person, i) => (
-				<Person key={person.id} name={person.name} number={person.number} />
+			{filteredPersons.map((person) => (
+				<Person
+					key={person.id}
+					name={person.name}
+					number={person.number}
+					id={person.id}
+					deletePerson={deletePerson}
+				/>
 			))}
 		</>
 	)

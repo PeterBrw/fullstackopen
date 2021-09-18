@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getAll, create } from '../src/services/persons'
+import { getAll, create, deleteAPerson } from '../src/services/persons'
 import Header from './components/Header'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
@@ -12,7 +12,9 @@ const App = () => {
 	const [filter, setFilter] = useState('')
 
 	useEffect(() => {
-		getAll().then((initPersons) => setPersons(initPersons))
+		getAll()
+			.then((initPersons) => setPersons(initPersons))
+			.catch((error) => alert('Something went wrong with fetching data!'))
 	}, [])
 
 	const addName = (e) => {
@@ -42,12 +44,28 @@ const App = () => {
 
 		const newPerson = { name: newName, number: newNumber }
 
-		create(newPerson).then((personAdded) => {
-			newPersons.push(personAdded)
-			setPersons(newPersons)
-			setNewName('')
-			setNewNumber('')
-		})
+		create(newPerson)
+			.then((personAdded) => {
+				newPersons.push(personAdded)
+				setPersons(newPersons)
+				setNewName('')
+				setNewNumber('')
+			})
+			.catch((error) => alert('Something went wrong with adding the person!'))
+	}
+
+	const deletePerson = (name, id) => {
+		const result = window.confirm(`Delete ${name} ?`)
+
+		if (result) {
+			deleteAPerson(id)
+				.then((response) => {
+					setPersons(persons.filter((person) => person.id !== id))
+				})
+				.catch((error) => {
+					alert('Something went wrong with deletion!')
+				})
+		}
 	}
 
 	const handleNameChange = (e) => setNewName(e.target.value)
@@ -78,7 +96,7 @@ const App = () => {
 
 			<Header text={'Numbers'} />
 
-			<Persons filteredPersons={filteredPersons} />
+			<Persons filteredPersons={filteredPersons} deletePerson={deletePerson} />
 		</div>
 	)
 }
