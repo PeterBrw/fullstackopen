@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getAll, create, deleteAPerson } from '../src/services/persons'
+import { getAll, create, deleteAPerson, update } from '../src/services/persons'
 import Header from './components/Header'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
@@ -21,17 +21,40 @@ const App = () => {
 		e.preventDefault()
 		const newPersons = [...persons]
 
-		let exists = false
+		let existsPerson = {}
 
 		newPersons.forEach((person) => {
-			if (person.name === newName) {
-				exists = true
+			if (person.name.toLowerCase() === newName.toLowerCase()) {
+				existsPerson = {
+					...person,
+					number: newNumber,
+					exists: true,
+				}
 			}
 		})
 
-		if (exists) {
-			alert(`${newName} is already added to phonebook`)
+		if (existsPerson.exists) {
+			const result = window.confirm(`${existsPerson.name} is already added to the phonebook, replace the old number with a new one?`)
+			if(result) {
+				update(existsPerson.id, {
+					name: existsPerson.name,
+					number: existsPerson.number,
+				})
+					.then((returnedPerson) => {
+						setPersons(
+							persons.map((person) =>
+								person.id !== existsPerson.id ? person : returnedPerson
+							)
+						)
+						setNewName('')
+						setNewNumber('')
+					})
+					.catch((error) =>
+						alert('Something went wrong when you want to replace the number!')
+					)
+			}
 			setNewName('')
+			setNewNumber('')
 			return
 		}
 
