@@ -4,12 +4,14 @@ import Header from './components/Header'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 
 const App = () => {
 	const [persons, setPersons] = useState([])
 	const [newName, setNewName] = useState('add a new name')
 	const [newNumber, setNewNumber] = useState('add the number')
 	const [filter, setFilter] = useState('')
+	const [notificationMessage, setNotificationMessage] = useState(null)
 
 	useEffect(() => {
 		getAll()
@@ -46,8 +48,12 @@ const App = () => {
 								person.id !== existsPerson.id ? person : returnedPerson
 							)
 						)
+						setNotificationMessage(`Number of  ${returnedPerson.name} was changed!`)
 						setNewName('')
 						setNewNumber('')
+						setTimeout(() => {
+							setNotificationMessage(null)
+						}, 5000)
 					})
 					.catch((error) =>
 						alert('Something went wrong when you want to replace the number!')
@@ -71,8 +77,12 @@ const App = () => {
 			.then((personAdded) => {
 				newPersons.push(personAdded)
 				setPersons(newPersons)
+				setNotificationMessage(`Added ${personAdded.name}`)
 				setNewName('')
 				setNewNumber('')
+				setTimeout(() => {
+					setNotificationMessage(null)
+				}, 5000)
 			})
 			.catch((error) => alert('Something went wrong with adding the person!'))
 	}
@@ -102,7 +112,7 @@ const App = () => {
 	return (
 		<div>
 			<Header text={'Phonebook'} />
-
+			<Notification message={notificationMessage} />
 			<Filter handleFilterChange={handleFilterChange} />
 
 			<Header text={'add a new'} />
