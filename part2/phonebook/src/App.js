@@ -12,6 +12,7 @@ const App = () => {
 	const [newNumber, setNewNumber] = useState('add the number')
 	const [filter, setFilter] = useState('')
 	const [notificationMessage, setNotificationMessage] = useState(null)
+	const [error, setError] = useState(false)
 
 	useEffect(() => {
 		getAll()
@@ -94,9 +95,21 @@ const App = () => {
 			deleteAPerson(id)
 				.then((response) => {
 					setPersons(persons.filter((person) => person.id !== id))
+					setNotificationMessage(`${name} has been removed with success`)
+					setError(true)
+					setTimeout(() => {
+						setNotificationMessage(null)
+						setError(false)
+					}, 5000)
 				})
 				.catch((error) => {
-					alert('Something went wrong with deletion!')
+					setNotificationMessage(`Information of  ${name} has already been removed from server`)
+					setPersons(persons.filter((person) => person.id !== id))
+					setError(true)
+					setTimeout(() => {
+						setNotificationMessage(null)
+						setError(false)
+					}, 5000)
 				})
 		}
 	}
@@ -112,7 +125,7 @@ const App = () => {
 	return (
 		<div>
 			<Header text={'Phonebook'} />
-			<Notification message={notificationMessage} />
+			<Notification message={notificationMessage} error={error} />
 			<Filter handleFilterChange={handleFilterChange} />
 
 			<Header text={'add a new'} />
