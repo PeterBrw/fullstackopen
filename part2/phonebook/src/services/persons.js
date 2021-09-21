@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://salty-scrubland-11041.herokuapp.com/api/persons'
+const baseUrl = '/api/persons'
 
 export const getAll = () => {
 	const request = axios.get(baseUrl)
