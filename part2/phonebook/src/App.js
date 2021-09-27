@@ -37,8 +37,10 @@ const App = () => {
 		})
 
 		if (existsPerson.exists) {
-			const result = window.confirm(`${existsPerson.name} is already added to the phonebook, replace the old number with a new one?`)
-			if(result) {
+			const result = window.confirm(
+				`${existsPerson.name} is already added to the phonebook, replace the old number with a new one?`
+			)
+			if (result) {
 				update(existsPerson.id, {
 					name: existsPerson.name,
 					number: existsPerson.number,
@@ -85,7 +87,14 @@ const App = () => {
 					setNotificationMessage(null)
 				}, 5000)
 			})
-			.catch((error) => alert('Something went wrong with adding the person!'))
+			.catch((error) => {
+				setNotificationMessage(error.response.data.error)
+				setError(true)
+				setTimeout(() => {
+					setNotificationMessage(null)
+					setError(false)
+				}, 5000)
+			})
 	}
 
 	const deletePerson = (name, id) => {
@@ -103,7 +112,9 @@ const App = () => {
 					}, 5000)
 				})
 				.catch((error) => {
-					setNotificationMessage(`Information of  ${name} has already been removed from server`)
+					setNotificationMessage(
+						`Information of  ${name} has already been removed from server`
+					)
 					setPersons(persons.filter((person) => person.id !== id))
 					setError(true)
 					setTimeout(() => {
